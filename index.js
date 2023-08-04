@@ -2,8 +2,6 @@ const { Response_v2: Response } = require("./response.js");
 
 const morgan = require("morgan");
 const express = require("express");
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger.json");
 
 const app = express();
 
@@ -19,15 +17,12 @@ app.use("/v1/wibu", require("./routes/v1/wibu"));
 app.use("/v2/anime-avatar", require("./routes/v2/anime-avatar"));
 /** Routes */
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: true }));
-
 app.use((err, req, res, next) => {
 	err.statusCode = err.statusCode || 500;
 	err.statusMessage = err.statusMessage || "Internal server error";
 
 	res.status(err.statusCode).json(new Response(err.statusCode, err.statusMessage, {
-		errorMessage: (err.name ? err.name + ": ": "") + err.message,
-		//errorStack: err.stack ? err.stack.split("\n"): ""
+		errorMessage: (err.name ? err.name + ": " : "") + err.message,
 	}));
 });
 

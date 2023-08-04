@@ -28,6 +28,7 @@ router.post("/create", async (req, res) => {
           } catch (err) {
                res.status(500).send(new Response());
                console.error(`Error when creating image`, err);
+               return;
           }
 
           res.set("Content-Type", "image/png");
@@ -39,7 +40,7 @@ router.post("/create", async (req, res) => {
 
 router.get("/list", (req, res) => {
      let mappedAnimeList;
-     
+
      try {
           mappedAnimeList = animeList.map((el, i) => {
                return {
@@ -50,7 +51,7 @@ router.get("/list", (req, res) => {
                          .replace(/.png/g, ""),
                     characterImageUrl: el.imgAnime.replace(/s120/g, "s0"),
                     characterDefaultBgColor: el.colorBg,
-                    _source: el.source ? el.source: "taoanhdep.com"
+                    _source: el.source ? el.source : "taoanhdep.com"
                }
           });
      } catch {

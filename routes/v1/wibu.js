@@ -26,6 +26,7 @@ router.get("/create", async (req, res) => {
 		} catch (err) {
 			res.status(500).send(new Response(500, "Internal server error"));
 			console.error(`Error when creating image`, err);
+			return;
 		}
 
 		res.set("Content-Type", "image/png");
