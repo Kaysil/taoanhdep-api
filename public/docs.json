@@ -1,0 +1,206 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "taoanhdep",
+    "description": "**an api for creating anime avatars**",
+    "contact": {
+      "name": "kaysil",
+      "url": "https://github.com/Kaysil"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://taoanhdep.kaysil.dev"
+    }
+  ],
+  "tags": [
+    {
+      "name": "wibu",
+      "description": "creating avatar with anime style"
+    }
+  ],
+  "paths": {
+    "/v1/wibu/create": {
+      "get": {
+        "tags": [
+          "wibu"
+        ],
+        "summary": "creating image",
+        "operationId": "wibuCreate",
+        "parameters": [
+          {
+            "name": "id_nhanvat",
+            "in": "query",
+            "description": "the character id get from the list",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "maximum": 1090,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          {
+            "name": "chu_ky",
+            "in": "query",
+            "description": "the signature (above the character image)",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chu_nen",
+            "in": "query",
+            "description": "the background text (behind the character)",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mau_nen",
+            "in": "query",
+            "description": "background color (can be text [pink, yellow] or hex codes), leave it blank for using character default color",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "hex"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "retrun a image if successful",
+            "content": {
+              "image/png": {}
+            }
+          },
+          "400": {
+            "description": "missing query parameters"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/v1/wibu/list": {
+      "get": {
+        "tags": [
+          "wibu"
+        ],
+        "summary": "get the character list",
+        "operationId": "wibuList",
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WibuListResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "WibuListResponse": {
+        "required": [
+          "id",
+          "manufacturer",
+          "name",
+          "releaseDate"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "format": "number",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "format": "string",
+            "example": "successful"
+          },
+          "data": {
+            "type": "array",
+            "format": "array",
+            "items": {
+              "$ref": "#/components/schemas/WibuListData"
+            }
+          }
+        }
+      },
+      "WibuListData": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "number",
+            "example": 0
+          },
+          "name": {
+            "type": "string",
+            "example": "boy"
+          },
+          "dupe_name": {
+            "type": "string",
+            "example": "boy-1"
+          },
+          "image_url": {
+            "type": "string",
+            "format": "url",
+            "example": "https://raw.githubusercontent.com/Kaysil/tad-assets/main/anime-avatar/high/boy-1.png"
+          },
+          "image_original_url": {
+            "type": "string",
+            "format": "url",
+            "example": "https://lh3.googleusercontent.com/-BrCbdZUqVi0/YbFvE6sIPvI/AAAAAAAA2CQ/145Yk71SYAUk2LpVME6ZvA2DRb_9YQ2egCNcBGAsYHQ/h240/boy.png"
+          },
+          "primary_color": {
+            "type": "string",
+            "format": "hex",
+            "example": "#9fc177"
+          },
+          "category": {
+            "type": "string",
+            "format": "string",
+            "example": "boy"
+          },
+          "margin_left": {
+            "type": "number",
+            "format": "number",
+            "example": 0
+          },
+          "mask_height": {
+            "type": "number",
+            "format": "number",
+            "example": 0
+          }
+        }
+      }
+    }
+  }
+}

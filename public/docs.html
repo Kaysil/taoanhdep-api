@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>taoanhdep-api | docs</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.min.css"
+			integrity="sha512-ZfAdJZStM1+yKF/OZ9l4/3x9paKhdCP6YhQAX8WsMhFUrp/Ox6L5p/E9GIH7Adotp9rxXMRrkWATERDDzSJHrQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+	</head>
+	<body>
+		<div id="swagger-ui"></div>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui-bundle.js"
+			integrity="sha512-aZqzgBv9Y3CaYdXpQ4tge+WGqZkySKBL5aE87dNDRE8V1X+H9bkxNEkOuxN8jA7tAHyg+fO/wKyxpxMndxK0gg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui-standalone-preset.js"
+			integrity="sha512-hrWFD5S8jduCsQCcYaR+w0vkgHC3Iromo5LtYCNTLfIQ7gfk17BiFuV5Yi7NS42+iiApwXqp3ud8zVCdiIbeug=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script>
+			window.onload = function () {
+				const ui = SwaggerUIBundle({
+					url: "./docs.json",
+					dom_id: "#swagger-ui",
+					presets: [
+						SwaggerUIBundle.presets.apis,
+						SwaggerUIStandalonePreset,
+					],
+					layout: "BaseLayout",
+				});
+			};
+		</script>
+	</body>
+</html>
