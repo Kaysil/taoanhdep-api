@@ -1,4 +1,4 @@
-const { Response_v2: Response } = require("./response.js");
+const { Response } = require("./utils");
 
 const morgan = require("morgan");
 const express = require("express");
@@ -10,25 +10,26 @@ app.set("json spaces", 2);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("combined"));
+app.use(express.static("public"))
 
-/** Routes */
-app.use("/", require("./routes/index"));
+/** routes */
 app.use("/v1/wibu", require("./routes/v1/wibu"));
-app.use("/v2/anime-avatar", require("./routes/v2/anime-avatar"));
-/** Routes */
+/** routes */
 
+/** error handling */
 app.use((err, req, res, next) => {
-	err.statusCode = err.statusCode || 500;
-	err.statusMessage = err.statusMessage || "Internal server error";
+	if (!err) return next();
 
-	res.status(err.statusCode).json(new Response(err.statusCode, err.statusMessage, {
-		errorMessage: (err.name ? err.name + ": " : "") + err.message,
-	}));
+	console.error(err);
+	return res.status(500).send(new Response(500, err.name));
 });
+/** error handling */
 
+/** 404 handling */
 app.use(function (req, res, next) {
-	res.status(404).send(new Response(404, "Uhh, what?", null));
+	res.status(404).send(new Response(404, "this endpoint is not exists"));
 });
+/** 404 handling */
 
 const server = app.listen(process.env.PORT || 3000, () => {
 	console.log(`Server started and listening on port ${server.address().port}`);
