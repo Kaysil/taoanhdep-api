@@ -44,7 +44,7 @@ router.get("/create", async (req, res) => {
 });
 
 router.get("/list", (req, res) => {
-	return res.status(200).send(new Response(200, "success", data));
+	return res.status(200).send(new Response(200, data));
 });
 
 module.exports = router;
